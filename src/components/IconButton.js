@@ -11,17 +11,25 @@ const Icon = styled.Image`
   margin: 10px;
 `
 
-const IconButton = ({ type, onPressOut }) => {
+const IconButton = ({ type, onPressOut, id }) => {
+  const _onPressOut = () => {
+    onPressOut(id)
+  }
   return (
-    <Pressable onPressOut={onPressOut} hitSlop={50}>
+    <Pressable onPressOut={_onPressOut} hitSlop={50}>
       <Icon source={type} />
     </Pressable>
   )
 }
 
+IconButton.defaultProps = {
+  onPressOut: () => {},
+}
+
 IconButton.proptypes = {
   type: PropTypes.oneOf(Object.values(images)).isRequired,
   onPressOut: PropTypes.func,
+  id: PropTypes.string,
 }
 
 export default IconButton
