@@ -29,10 +29,10 @@ export default function App() {
   const width = Dimensions.get('window').width
   const [newTask, setNewTask] = useState('')
   const [tasks, setTasks] = useState({
-    1: { id: '1', text: 'Hanbit', completed: false },
+    1: { id: '1', text: 'test', completed: false },
     2: { id: '2', text: 'React Native', completed: true },
     3: { id: '3', text: 'React Native Sample', completed: false },
-    4: { id: '4', text: 'Edit Todo Tiem', completed: false },
+    4: { id: '4', text: 'Edit Todo item', completed: false },
   })
 
   const _addTask = () => {
