@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/native'
 import PropTypes from 'prop-types'
 import IconButton from './IconButton'
 import { images } from '../images'
+import Input from './Input'
 
 const Container = styled.View`
   flex-direction: row;
@@ -21,8 +22,26 @@ const Contents = styled.Text`
     completed ? 'line-through' : 'none'};
 `
 
-const Task = ({ item, deleteTask, toggleTask }) => {
-  return (
+const Task = ({ item, deleteTask, toggleTask, updateTask }) => {
+  const [isEditing, setIsEditing] = useState(false)
+  const [text, setText] = useState(item.text)
+  const _handleUpdateButtonPress = () => {
+    setIsEditing(true)
+  }
+  const _onSubmitEditing = () => {
+    if (isEditing) {
+      const editedTask = Object.assign({}, item, { text })
+      setIsEditing(false)
+      updateTask(editedTask)
+    }
+  }
+  return isEditing ? (
+    <Input
+      value={text}
+      onChangeText={(text) => setText(text)}
+      onSubmitEditing={_onSubmitEditing}
+    />
+  ) : (
     <Container>
       <IconButton
         type={item.completed ? images.completed : images.uncompleted}
@@ -31,7 +50,12 @@ const Task = ({ item, deleteTask, toggleTask }) => {
         completed={item.completed}
       />
       <Contents completed={item.completed}>{item.text}</Contents>
-      {item.completed || <IconButton type={images.update} />}
+      {item.completed || (
+        <IconButton
+          type={images.update}
+          onPressOut={_handleUpdateButtonPress}
+        />
+      )}
       <IconButton
         type={images.delete}
         id={item.id}

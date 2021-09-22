@@ -36,7 +36,7 @@ export default function App() {
   })
 
   const _addTask = () => {
-    const ID = Date.now.toString()
+    const ID = Date.now().toString()
     const newTaskObject = {
       [ID]: { id: ID, text: newTask, completed: false },
     }
@@ -53,6 +53,12 @@ export default function App() {
   const _toggleTask = (id) => {
     const currentTasks = Object.assign({}, tasks)
     currentTasks[id]['completed'] = !currentTasks[id]['completed']
+    setTasks(currentTasks)
+  }
+
+  const _updateTask = (item) => {
+    const currentTasks = Object.assign({}, tasks)
+    currentTasks[item.id] = item
     setTasks(currentTasks)
   }
 
@@ -83,6 +89,7 @@ export default function App() {
                 item={item}
                 deleteTask={_deleteTask}
                 toggleTask={_toggleTask}
+                updateTask={_updateTask}
               />
             ))}
         </List>
